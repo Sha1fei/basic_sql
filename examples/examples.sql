@@ -10,4 +10,6 @@ INSERT INTO employee(first_name, last_name, salary) VALUES ('Ivan', 'Ivanov', 10
 INSERT INTO employee(first_name, last_name, salary) VALUES ('Ivan', 'Sidorov', 1000)
 SELECT DISTINCT first_name AS fname FROM employee ORDER BY fname DESC;
 SELECT first_name AS fname, last_name AS lname, salary FROM employee ORDER BY salary DEsc limit 3 offset 1;
-SELECT first_name AS fname, salary FROM employee WHERE salary IN  (1000, 2000) OR (first_name LIKE '%etr' AND last_name = 'Petrov');
+SELECT first_name AS fname, salary FROM employee WHERE salary IN  (1000, 2000) OR (first_name LIKE '%etr' AND last_name = 'Petrov') OR salary BETWEEN 1000 AND 2000;
+SELECT sum(salary) AS sum, avg(salary) AS avg, max(salary) AS max, min(salary) AS min, count(salary) AS count, now() FROM employee;
+SELECT lower(first_name) AS fname, upper(last_name) as lname, concat(first_name, ' ', last_name) FROM employee;
