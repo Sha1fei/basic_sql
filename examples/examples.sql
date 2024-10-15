@@ -26,4 +26,7 @@ INSERT INTO company_storage.company(name, date) VALUES ('Google', '2011-01-01'),
 CREATE TABLE company_storage.employee("id" INT GENERATED ALWAYS AS IDENTITY, first_name VARCHAR(128), last_name VARCHAR(128), salary INT, company_id INT references company_storage.company(id), company_name VARCHAR(128), UNIQUE(first_name, last_name), FOREIGN KEY (company_name) references company_storage.company(name) ON DELETE cascade);
 INSERT INTO company_storage.employee(first_name, last_name, salary, company_id, company_name) VALUES ('Ivan', 'Ivanov', 1000, 1, 'Google' ), ('Sveta', 'Svatikova', 2000, 2, 'Facebook'), ('Petr', 'Petrov', 3000, 1, 'Google');
 
+SELECT name, date FROM company_storage.company WHERE id = 1 UNION ALL SELECT name, date FROM company_storage.company WHERE id = 2;s
+SELECT name FROM (SELECT * FROM company_storage.company c ORDER BY id DESC limit 3) WHERE id IN (SELECT company_id FROM company_storage.employee WHERE salary > 1000);
+SELECT * FROM (VALUES ('Google', '2011-01-01'), ('Facebook', '2012-01-01'));
 

@@ -16,6 +16,7 @@
       - `WHERE date BETWEEN '2011-01-01' AND '2011-03-01'` - фильтрация данных, по диапазону BETWEEN и AND значениями 
       - `WHERE id IN (1, 2, 8, 9, 10, 11)` - фильтрация данных,из списка значений
       - `AND ... OR` - конъюнкция и дизъюнкция условий
+      - `IS NOT NULL` - для сравнения на NULL используется IS, а не =  
 - ### Functions
   - `SELECT sum(salary) AS sum, avg(salary) AS avg, max(salary) AS avg, min(salary) AS avg, count(salary) AS count, now() FROM employee;` - при
          - `sum` - сумма значений в столбце
@@ -28,3 +29,13 @@
          - `lower` - перевод в нижний регистр
          - `upper` - перевод в верхний регистр
          - `concat` - конкатенация строк в столбце
+- ### Union
+  - `SELECT name, date FROM company WHERE id = 1 UNION ALL SELECT name, date FROM company WHERE id = 2` 
+        -  `UNION ALL` - объединяет все результаты выборки из таблиц, UNION - выводит только уникальные (не повторяющиеся)
+- ### Nested Request
+    - `SELECT name FROM (SELECT * FROM company ORDER BY id DESC LIMIT 3) WHERE id IN (SELECT company_id FROM employee WHERE salary > 1000)`
+      - можем подставлять подзапросы со столбцами с колонками в `FROM` и `WHERE`, сначала выполнится самый вложенный
+    - `SELECT salary, (SELECT MAX(salary) AS max FROM employee) max from employee;`
+      - можем подставлять значение в выводимые столбцы
+    - `SELECT * FROM (VALUES ('Google', '2011-01-01'), ('Facebook', '2012-01-01'))`
+      - можем подставлять `VALUES` из `INSERT` запроса т.к. это тоже данные со столбцами и строками
