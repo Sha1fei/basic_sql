@@ -30,3 +30,9 @@ SELECT name, date FROM company_storage.company WHERE id = 1 UNION ALL SELECT nam
 SELECT name FROM (SELECT * FROM company_storage.company c ORDER BY id DESC limit 3) WHERE id IN (SELECT company_id FROM company_storage.employee WHERE salary > 1000);
 SELECT * FROM (VALUES ('Google', '2011-01-01'), ('Facebook', '2012-01-01'));
 
+
+INSERT INTO company_storage.employee(first_name, last_name, salary) VALUES ('Test', 'Testov', NUll);
+UPDATE company_storage.employee SET salary = 10000 WHERE first_name = 'Test' RETURNING *;
+DELETE FROM company_storage.employee WHERE first_name = 'Test' RETURNING *;
+
+
