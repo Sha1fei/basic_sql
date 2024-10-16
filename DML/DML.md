@@ -3,12 +3,12 @@
 - ### Insert
     - `INSERT INTO company(name, date) VALUES ('Google', '2011-01-01'), ('Facebook', '2012-01-01');` - вставка строчки в таблицу БД 
 - ### Delete
-    - `DELETE FROM company_storage.employee WHERE first_name = 'Test' RETURNING *;` - удаление строки таблицы
-      -`RETURNING *` - возращает удаленную строку
+    - `DELETE FROM company_storage.employee WHERE first_name = 'Test' RETURNING *;` - удаление строки таблицы 
+      - `RETURNING *` - возращает удаленную строку
 - ### Update
     - `UPDATE company_storage.employee SET salary = 10000 WHERE first_name = 'Test' RETURNING *;` - обновление строки таблицы
-      -`SET` - устанавливаемые значения
-      -`RETURNING *` - возращает обновленную строку
+      - `SET` - устанавливаемые значения
+      - `RETURNING *` - возращает обновленную строку
 - ### Select
     - `SELECT DISTINCT name AS company, date FROM company WHERE (name != 'Facebook') AND (name LIKE '%o%') AND id IN (1, 2, 8, 9, 10, 11) ORDER BY name, date DESC LIMIT 2 OFFSET 2;` - выбор данных из таблицы
       - `name AS company` - переименовать выводимый столбец
