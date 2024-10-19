@@ -35,4 +35,21 @@ INSERT INTO company_storage.employee(first_name, last_name, salary) VALUES ('Tes
 UPDATE company_storage.employee SET salary = 10000 WHERE first_name = 'Test' RETURNING *;
 DELETE FROM company_storage.employee WHERE first_name = 'Test' RETURNING *;
 
+DROP TABLE company_storage.company;
+DROP TABLE company_storage.employee;
+DROP TABLE company_storage.contact;
+DROP TABLE company_storage.employeeId_contactId;
+CREATE TABLE company_storage.company(id INT GENERATED ALWAYS AS IDENTITY, name VARCHAR(128) UNIQUE NOT NULL, date DATE NOT NULL CHECK (date > '1995-01-01' AND date < '2020-01-01'), PRIMARY KEY (id));
+CREATE TABLE company_storage.employee(id INT GENERATED ALWAYS AS IDENTITY, first_name VARCHAR(128), last_name VARCHAR(128), salary INT, company_id INT references company_storage.company(id) ON DELETE CASCADE, PRIMARY KEY (id));
+CREATE TABLE company_storage.contact(id INT GENERATED ALWAYS AS IDENTITY, phone VARCHAR(128), type VARCHAR(128), PRIMARY KEY (id));
+CREATE TABLE company_storage.employeeId_contactId(id INT GENERATED ALWAYS AS IDENTITY, employeeId INT references company_storage.employee(id) ON DELETE CASCADE, contactId INT references company_storage.contact(id)ON DELETE CASCADE);
+INSERT INTO company_storage.company(name, date) VALUES ('Google', '2011-01-01'), ('Facebook', '2012-01-01');
+INSERT INTO company_storage.employee(first_name, last_name, salary, company_id) VALUES ('Ivan', 'Ivanov', 1000, 1), ('Sveta', 'Svatikova', 2000, 2), ('Petr', 'Petrov', 3000, 1);
+INSERT INTO company_storage.contact(phone, type) VALUES ('666-666', 'work'), ('222-222', 'work'), ('8-999-999-99-99', 'private'), ('8-999-333-33-33', 'private') , ('8-999-111-11-11', 'private');
+INSERT INTO company_storage.employeeId_contactId(employeeId , contactId) VALUES (1, 1), (2, 1), (3, 2), (1, 3), (2, 4), (3, 5);
+SELECT (emp.first_name || ' ' || emp.last_name) AS employee, comp.name AS company, (c.phone || ' ' || c.type) AS contact  FROM company_storage.employee emp JOIN company_storage.company comp ON emp.company_id = comp.id JOIN company_storage.employeeid_contactid ec ON emp.id = ec.employeeId JOIN company_storage.contact c ON c.id = ec.contactId WHERE c.type = 'private';
+SELECT (emp.first_name || ' ' || emp.last_name) AS employee, comp.name AS company FROM company_storage.employee emp JOIN company_storage.company comp ON emp.company_id = comp.id;
+SELECT (emp.first_name || ' ' || emp.last_name) AS employee, comp.name AS company FROM company_storage.employee emp RIGHT JOIN company_storage.company comp ON emp.company_id = comp.id;
+SELECT (emp.first_name || ' ' || emp.last_name) AS employee, comp.name AS company FROM company_storage.employee emp LEFT JOIN company_storage.company comp ON emp.company_id = comp.id;
+SELECT (emp.first_name || ' ' || emp.last_name) AS employee, comp.name AS company FROM company_storage.employee emp FULL JOIN company_storage.company comp ON emp.company_id = comp.id;
 

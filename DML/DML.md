@@ -44,3 +44,12 @@
       - можем подставлять значение в выводимые столбцы
     - `SELECT * FROM (VALUES ('Google', '2011-01-01'), ('Facebook', '2012-01-01'))`
       - можем подставлять `VALUES` из `INSERT` запроса т.к. это тоже данные со столбцами и строками
+- ### JOIN
+    - `SELECT (emp.first_name || ' ' || emp.last_name) AS employee, comp.name AS company, (c.phone || ' ' || c.type) AS contact  FROM company_storage.employee emp JOIN company_storage.company comp ON emp.company_id = comp.id JOIN company_storage.employeeid_contactid ec ON emp.id = ec.employeeId JOIN company_storage.contact c ON c.id = ec.contactId WHERE c.type = 'private';`
+        - `JOIN` указываем таблицу `ON`указываем по каким строкам соединяем таблицы - отсекаются NULL значения из обоих таблиц
+    - `SELECT (emp.first_name || ' ' || emp.last_name) AS employee, comp.name AS company FROM company_storage.employee emp LEFT JOIN company_storage.company comp ON emp.company_id = comp.id;`
+        - отсекаются NULL соотношения значений из правой таблицы
+    - `SELECT (emp.first_name || ' ' || emp.last_name) AS employee, comp.name AS company FROM company_storage.employee emp RIGHT JOIN company_storage.company comp ON emp.company_id = comp.id;`
+        - отсекаются NULL соотношения значения из левой таблицы
+    - `SELECT (emp.first_name || ' ' || emp.last_name) AS employee, comp.name AS company FROM company_storage.employee emp FULL JOIN company_storage.company comp ON emp.company_id = comp.id;`
+        - показываются все null значения из таблиц
