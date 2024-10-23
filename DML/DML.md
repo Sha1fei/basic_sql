@@ -21,19 +21,7 @@
       - `WHERE date BETWEEN '2011-01-01' AND '2011-03-01'` - фильтрация данных, по диапазону BETWEEN и AND значениями 
       - `WHERE id IN (1, 2, 8, 9, 10, 11)` - фильтрация данных,из списка значений
       - `AND ... OR` - конъюнкция и дизъюнкция условий
-      - `IS NOT NULL` - для сравнения на NULL используется IS, а не =  
-- ### Functions
-  - `SELECT sum(salary) AS sum, avg(salary) AS avg, max(salary) AS avg, min(salary) AS avg, count(salary) AS count, now() FROM employee;` - при
-         - `sum` - сумма значений в столбце
-         - `avg` - среднее значение в столбце
-         - `max` - максимальное значение в столбце
-         - `min` - минимальное значение в столбце
-         - `count` - колличество столбцов в выборке not null, count(*) колличество всех столбцов в выборке
-         - `now` - текущее время на сервере
-  -`SELECT lower(first_name) AS fname, upper(last_name) as lname, concat(first_name, ' ', last_name) FROM employee;`
-         - `lower` - перевод в нижний регистр
-         - `upper` - перевод в верхний регистр
-         - `concat` - конкатенация строк в столбце
+      - `IS NOT NULL` - для сравнения на NULL используется IS, а не =
 - ### Union
   - `SELECT name, date FROM company WHERE id = 1 UNION ALL SELECT name, date FROM company WHERE id = 2` 
         -  `UNION ALL` - объединяет все результаты выборки из таблиц, UNION - выводит только уникальные (не повторяющиеся)
@@ -53,3 +41,25 @@
         - отсекаются NULL соотношения значения из левой таблицы
     - `SELECT (emp.first_name || ' ' || emp.last_name) AS employee, comp.name AS company FROM company_storage.employee emp FULL JOIN company_storage.company comp ON emp.company_id = comp.id;`
         - показываются все null значения из таблиц
+- ### Functions
+    - `SELECT sum(salary) AS sum, avg(salary) AS avg, max(salary) AS avg, min(salary) AS avg, count(salary) AS count, now() FROM employee;` 
+      - `sum` - сумма значений в столбце
+      - `avg` - среднее значение в столбце
+      - `max` - максимальное значение в столбце
+      - `min` - минимальное значение в столбце
+      - `count` - колличество столбцов в выборке not null, count(*) колличество всех столбцов в выборке
+      - `now` - текущее время на сервере
+      -`SELECT lower(first_name) AS fname, upper(last_name) as lname, concat(first_name, ' ', last_name) FROM employee;`
+      - `lower` - перевод в нижний регистр
+      - `upper` - перевод в верхний регистр
+      - `concat` - конкатенация строк в столбце
+- ### GROUP BY
+  - `SELECT count(salary), salary FROM company_storage.employee e GROUP BY e.salary;`
+        - позволяет добавлять группировки для Functions
+- ### Window Functions
+    - `SELECT first_name, salary, MAX(salary) OVER(), COUNT(salary) OVER(PARTITION BY e.first_name) FROM company_storage.employee e GROUP BY e.salary, e.first_name;` 
+        - `OVER()` - создает оконную функцию, 
+        - `PARTITION BY` - разбиение внутри результатов оконной функции по параметру
+  - ### View 
+    - `CREATE VIEW custom_sql_view AS select * FROM company_storage.company c ORDER BY c.name;` 
+      - `select * from custom_sql_view;` - использование кастомного созданого вью, не ускоряет запросы - просто используем как аналог alias

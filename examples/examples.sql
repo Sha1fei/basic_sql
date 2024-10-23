@@ -53,3 +53,11 @@ SELECT (emp.first_name || ' ' || emp.last_name) AS employee, comp.name AS compan
 SELECT (emp.first_name || ' ' || emp.last_name) AS employee, comp.name AS company FROM company_storage.employee emp LEFT JOIN company_storage.company comp ON emp.company_id = comp.id;
 SELECT (emp.first_name || ' ' || emp.last_name) AS employee, comp.name AS company FROM company_storage.employee emp FULL JOIN company_storage.company comp ON emp.company_id = comp.id;
 
+SELECT  COUNT(salary), salary FROM company_storage.employee e GROUP BY e.salary;
+SELECT first_name, salary, MAX(salary) OVER(), COUNT(salary) over(partition BY e.first_name) FROM company_storage.employee e GROUP BY e.salary, e.first_name;
+SELECT * FROM company_storage.employee e;
+CREATE VIEW custom_sql_view AS SELECT * FROM company_storage.company c ORDER BY c.name;
+SELECT * FROM custom_sql_view;
+
+ALTER TABLE if EXISTS company_storage.company ADD COLUMN test VARCHAR(128);
+ALTER TABLE if EXISTS company_storage.company DROP test;

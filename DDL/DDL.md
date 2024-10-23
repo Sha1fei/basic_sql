@@ -16,3 +16,9 @@
   - `DROP SCHEMA company_storage;` - удаление схемы в БД
   - `DROP TABLE company;` - удаление схемы в БД
 - ### Alter
+  - `ALTER TABLE if EXISTS company_storage.company ADD COLUMN test VARCHAR(128);` - изменение текущей таблицы
+     - `ADD` - добавлние колонки
+     - `DROP` - удаление колонки
+     - `ALTER COLUMN test VARCHAR(256)`; - измененеие типа колонки
+     - `ADD CHECK (Age > 21);` - изменение ограничения
+     - `DROP FK_Orders_To_Customers;` - удаления ограничения по имени
