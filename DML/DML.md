@@ -22,9 +22,16 @@
       - `WHERE id IN (1, 2, 8, 9, 10, 11)` - фильтрация данных,из списка значений
       - `AND ... OR` - конъюнкция и дизъюнкция условий
       - `IS NOT NULL` - для сравнения на NULL используется IS, а не =
+      - `WHERE (end_date - start_date) > INTERVAL 5 DAY;` - `INTREVAL` задает временной диапазон
+      - `EXTRACT(DAY FROM TIMESTAMP '2016-12-31 13:30:15') d;` - `EXTRACT` достает значение из TIMESTAMP (MINUTE, MONTH, YEAR, HOUR и т.д.)
+      - `CAST(12005.6 AS DECIMAL), CONVERT(12005.4, DECIMAL);` - `CAST` и `CONVERT` - преобразуют типы значений для дальнейшего использования в запросах (DATE, CHAR, DECIMAL и т.д.)
+      - `SELECT EXISTS(SELECT * FROM Products WHERE ProductName = "Mozzarella") AS Mozzarella;` - позволяет использовать true/false вмсето результат запроса при наличии/отсутсвиии занчений
 - ### Union
   - `SELECT name, date FROM company WHERE id = 1 UNION ALL SELECT name, date FROM company WHERE id = 2` 
-        -  `UNION ALL` - объединяет все результаты выборки из таблиц, UNION - выводит только уникальные (не повторяющиеся)
+        - `UNION ALL` - объединяет все результаты выборки из таблиц, 
+        - `UNION` - выводит только уникальные (не повторяющиеся в обоих множжествах)
+        - `INRESECT` - выводит только повторящиеся (присутствуют в обоих множествах)
+        - `EXCEPT` - исключаем из множества A все что пересекается с множеством B
 - ### Nested Request
     - `SELECT name FROM (SELECT * FROM company ORDER BY id DESC LIMIT 3) WHERE id IN (SELECT company_id FROM employee WHERE salary > 1000)`
       - можем подставлять подзапросы со столбцами с колонками в `FROM` и `WHERE`, сначала выполнится самый вложенный
@@ -60,6 +67,14 @@
     - `SELECT first_name, salary, MAX(salary) OVER(), COUNT(salary) OVER(PARTITION BY e.first_name) FROM company_storage.employee e GROUP BY e.salary, e.first_name;` 
         - `OVER()` - создает оконную функцию, 
         - `PARTITION BY` - разбиение внутри результатов оконной функции по параметру
-  - ### View 
-    - `CREATE VIEW custom_sql_view AS select * FROM company_storage.company c ORDER BY c.name;` 
-      - `select * from custom_sql_view;` - использование кастомного созданого вью, не ускоряет запросы - просто используем как аналог alias
+- ### View 
+  - `CREATE VIEW custom_sql_view AS select * FROM company_storage.company c ORDER BY c.name;` 
+    - `SELECT * FROM custom_sql_view;` - использование кастомного созданого вью, не ускоряет запросы - просто используем как аналог alias
+    - `CREATE MATERIALIZED VIEW` - создание закешированого VIEW, `REFRESH MATERIALIZED VIEW` - обновление кеша VIEW
+
+- ### Tools
+    - `EXPLAIN ANALYZE SELECT * FROM company_storage.company;`
+        - `EXPLAIN` - описание выполнение запроса с помощью индексов, `ANALYZE` - одновить данные привязки инедксации
+    - `SELECT generate_series * random() AS random, generate_series AS series FROM generate_series(1, 100);` 
+        - `generate_series` - генерация значений (значение, количество), 
+        - `random` - случайное число в диапазоне 0.0 <= x < 1.0

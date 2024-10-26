@@ -11,6 +11,7 @@
      - `PRIMARY KEY` - основной ключ
      - `REFERENCES` - указатель на колонку строннюю таблицу, либо FOREIGN KEY (company_name) REFERENCES company(name)
      - `ON DELETE CASCADE` - параметр для FOREIGN KEY для автоматического удаления свяязанных записей из других таблиц
+  - `CREATE UNIQUE INDEX unique_index ON company (name, manager);` - создание новых индексов для таблицы (может быть составным) `UNIQUE` - необязателен, придает уникальность ключу (не создаст подтаблицу из двух и более строк по одному индексу)
 - ### Drop
   - `DROP DATABASE company_repository;` - удаление БД
   - `DROP SCHEMA company_storage;` - удаление схемы в БД

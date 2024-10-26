@@ -61,3 +61,5 @@ SELECT * FROM custom_sql_view;
 
 ALTER TABLE if EXISTS company_storage.company ADD COLUMN test VARCHAR(128);
 ALTER TABLE if EXISTS company_storage.company DROP test;
+
+SELECT generate_series * random() AS random, generate_series AS series FROM generate_series(1, 100);
