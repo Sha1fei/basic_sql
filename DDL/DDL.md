@@ -23,3 +23,16 @@
      - `ALTER COLUMN test VARCHAR(256)`; - измененеие типа колонки
      - `ADD CHECK (Age > 21);` - изменение ограничения
      - `DROP FK_Orders_To_Customers;` - удаления ограничения по имени
+
+# PostgresSql commands
+  - `psql --host=localhost --port=5432 --dbname=new_db_name` - подклюяение к базе данных new_db_name
+    - `c "new_db_name_2` - создание базы данных new_db_name_2
+    - `\l` - список все баз данных
+    - `\c new_db_name` - переключение на базу данных new_db_name
+    - `\d` - список всех таблицы в текущей базе данных
+    - `\dt` - список всех таблиц (БЕЗ sequence) в текущей базе данных
+    - `\d table_name` - информация о таблице table_name
+    - `\q` - выход из бд
+    - `-d new_db_name -f new_db_name.sql` - применение sql файла базы данных для накатывания на созданную бд 
+  `pg_dump -d new_db_name > new_db_name.sql` - создание дампа из базы данных
+  

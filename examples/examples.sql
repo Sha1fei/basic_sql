@@ -63,3 +63,17 @@ ALTER TABLE if EXISTS company_storage.company ADD COLUMN test VARCHAR(128);
 ALTER TABLE if EXISTS company_storage.company DROP test;
 
 SELECT generate_series * random() AS random, generate_series AS series FROM generate_series(1, 100);
+
+
+// Командды для работы с postgresql
+
+psql --host=localhost --port=5432 --dbname=new_db_name - подклюяение к базе данных new_db_name
+  \l - список все баз данных
+  \c new_db_name - переключение на базу данных new_db_name
+  \d - список всех таблицы в текущей базе данных
+  \dt - список всех таблиц (БЕЗ sequence) в текущей базе данных
+  \d table_name - информация о таблице table_name
+  \q - выход из бд
+pg_dump
+
+
